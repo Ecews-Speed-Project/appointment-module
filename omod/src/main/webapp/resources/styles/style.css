@@ -1,0 +1,230 @@
+       .mainDiv{
+            width:100%;
+        }
+        .appt{
+            padding:2%;
+
+        }
+        .title{
+            text-align: center;
+
+        }
+        .title h3 {
+            color: #00463f;
+            font-weight:900;
+        }
+
+        .appt-header{
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             padding: 10px 20px;
+             font-size: 10pt;
+             font-weight: 700;
+             box-shadow: 0 2px 3px -0.5px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+             border-radius: 10px;
+             border: solid 0.5px #87908fb0;
+        }
+
+        .filter{
+            width: 60%;
+        }
+
+        .searchDiv{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-search, .btn-appt{
+            color: #fff !important;
+            text-decoration: none !important;
+            font-size: 10pt !important;
+            font-weight: bold !important;
+
+        }
+
+
+        .landingPage{
+            display: flex;
+            justify-content: space-between;
+        }
+        .landingPage > div {
+            padding:1.5%;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border-radius: 5px;
+            height: 120px;
+            width:250px;
+            margin: 0 2%;
+            border: solid 0.2px #F3F4F2;
+        }
+        .landingPage  > div > h3, .pbs-area h3{
+            font-size: 10pt;
+            font-weight: bold;
+        }
+
+        .pbs-area{
+            margin:0;
+            display:flex;
+            justify-content:space-between;
+        }
+        .pbs-area h3{
+            margin:0px;
+        }
+
+        .bg-green{
+            border-radius: 3px;
+            background-color: #D0F0DB;
+            color: #00463f;
+        }
+         .green-bg{
+            background-color: #00463f !important;
+         }
+
+        .percent{
+            border-radius: 4px;
+            padding: 5px;
+            color: red;
+        }
+
+        .percent h3{
+            font-size: 8pt;
+        }
+
+        .percent-red h3{
+            color:darkred;
+        }
+
+        .icon{
+            z-index: 10;
+            color: #00463f;
+        }
+
+        .value{
+            font-size: 14pt !important;
+            font-weight: 900 !important;
+        }
+
+        .appt-list{
+            margin-top: 2%;
+        }
+
+        .status-span{
+            display: inline-block;
+            padding:2% 5%;
+            border-radius: 10px;
+        }
+
+        .appt-landing{
+            font-size: 10pt;
+            font-weight:500;
+        }
+
+        .name-bold{
+            display: inline-block;
+            font-weight:700;
+        }
+
+        #viewIcon{
+            cursor: pointer;
+            padding-left:5px;
+        }
+
+        #body-wrapper{
+            position: relative !important;
+        }
+
+        #newAppt {
+          overflow: scroll;
+          box-sizing: border-box;
+          display: none;
+          position: absolute;
+          top: 0 !important;
+          bottom: 0 !important;
+          width: 55%;
+          height: 100%;
+          margin:0 !important;
+          right: 0 !important;
+          animation-duration: 0.5s;
+          animation-name: animate-pop;
+          animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
+          background-color: rgb(241, 245, 249);
+        }
+
+        @keyframes animate-pop {
+          0% {
+            opacity: 0;
+            transform: scale(0.5, 0.5);
+          }
+
+          100% {
+            opacity: 1;
+            transform: scale(1, 1);
+          }
+        }
+
+        .new-appt-head{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #00463f;
+            color: #fff;
+            font-size: 12pt;
+            font-weight: bold;
+        }
+
+        #closeAppt{
+            font-size: 18pt !important;
+            cursor: pointer;
+        }
+
+        .pat-search-form{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pat-search-input{
+            height: 45px;
+            width: 80%;
+        }
+
+
+        .pat-search-btn{
+            width:30%;
+            height: 45px;
+            background-color: #00463f;
+            text-decoration: none !important;
+            color: #fff !important;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .pat-search-btn:hover{
+            opacity: 0.9;
+        }
+
+        .pat-appt-btn{
+            width:100%;
+            height: 45px;
+            background-color: #00463f;
+            text-decoration: none !important;
+            color: #fff !important;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .pat-appt-btn:hover{
+            opacity: 0.9;
+        }
+
+
+
+
+
+
