@@ -12,6 +12,9 @@
      </div>
 
      <div class="pat-new-appt px-4 py-3 fw-bold hidden">
+        <div class="pat-new-appt-head py-2 mb-5 border-bottom border-success-subtle">
+
+        </div>
          <form class="form form-inline new-appt-form row">
             <div class="col-md-6">
                 Appointment Date: <input type="date" id="apptDate" class="form-control">

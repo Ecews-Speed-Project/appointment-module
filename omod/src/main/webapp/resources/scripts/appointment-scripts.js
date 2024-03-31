@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
            const baseline = currentAppt.filter(record => record.baseline === "Yes").length;
            const recapture = currentAppt.filter(record => record.recapture === "Yes").length;
            const recapture_percent = Math.round((recapture / baseline) * 100);
-           console.log(pbs_percent);
            tableRow += `<tr>
                <td>
                 <span class="name-bold">${patient.id}</span>
@@ -32,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
                <td>${patient.apptType} Appointment</td>
                <td>${statusSpan}</td>
                <td>${patient.date}</td>
-               <td><a href="#">View details</a> ${currentAppt.length}</td>
+               <td><a href="#">View details</a></td>
            </tr>`;
        });
 
@@ -83,7 +82,8 @@ document.addEventListener("DOMContentLoaded", () => {
             fetch("/ms/uiframework/resource/nmrsappointment/scripts/patientAppointments.json")
             .then(response => response.json())
             .then(data => {
-                const filteredPatients = data.filter(patient => patient.name.includes(searchText));
+                const filteredPatients = data.filter(patient => patient.name.toLowerCase().includes(searchText.toLowerCase()));
+                const currentPatient = (id) => data.filter(patient => patient.id === id );
 
                 if(filteredPatients.length < 1){
                     searchDisplay = `<h1>No Patient Found!</h1>`;
@@ -91,11 +91,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     searchResults.innerHTML = searchDisplay;
                 }
                 else{
-
+                    searchResults.style.display = 'block';
                     filteredPatients.sort((a,b) => a.name > b.name ? 1 : -1).map( patient => {
-                        searchResults.style.display = 'block';
                         searchDisplay += `
-                            <p class="patientId py-3 border-bottom border-success-subtle"
+                            <p class="patientId py-3 px-2 border-bottom border-success-subtle"
                                 data-patient-id=${patient.id}>
                                 ${patient.name}
                             </p>
@@ -109,13 +108,14 @@ document.addEventListener("DOMContentLoaded", () => {
                                patientNameElements.forEach(element => {
                                    element.addEventListener('click', () => {
                                        const patientId = element.getAttribute('data-patient-id');
-                                       // Check if the item exists in localStorage
-                                       if(localStorage.getItem('CurrentPatientID')) {
-                                           // If the item exists, delete it
-                                           localStorage.removeItem('CurrentPatientID');
-                                       }
-                                       // Add a new item to localStorage
-                                       localStorage.setItem('CurrentPatientID', patientId);
+                                                if(localStorage.getItem('CurrentPatient')) {
+                                                      // If the item exists, delete it
+                                                      localStorage.removeItem('CurrentPatient');
+                                                  }
+                                                  // Add a new item to localStorage
+                                                  const cur_patient = JSON.stringify(currentPatient(patientId));
+                                                  localStorage.setItem('CurrentPatient', cur_patient);
+
                                        const search_result = document.querySelector(".pat-search-and-result");
                                        const searchResults = document.querySelector(".pat-search-result");
                                        const search_input = document.querySelector(".pat-search-input");
@@ -124,6 +124,14 @@ document.addEventListener("DOMContentLoaded", () => {
                                        newPatientAppt.style.display = 'block';
                                        search_input.value = '';
                                        searchResults.style.display = 'none';
+
+                                       const patient_details = document.querySelector(".pat-new-appt-head");
+                                       const pdata = JSON.parse(localStorage.getItem("CurrentPatient"));
+                                        const isPBS = pdata[0].baseline === "Yes" ?
+                                            `<i class="fa-solid fa-fingerprint"></i>` : "No Base PBS";
+                                       patient_details.innerHTML = `
+                                           <p>${pdata[0].name} ${isPBS}</p>
+                                       `;
                                    });
                                });
                 }
