@@ -9,12 +9,18 @@
  */
 package org.openmrs.module.nmrsappointment.api.impl;
 
+import org.openmrs.Patient;
+import org.openmrs.PersonName;
 import org.openmrs.api.APIException;
 import org.openmrs.api.UserService;
+import org.openmrs.api.db.DAOException;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.nmrsappointment.Item;
 import org.openmrs.module.nmrsappointment.api.NMRSAppointmentModuleService;
 import org.openmrs.module.nmrsappointment.api.dao.NMRSAppointmentModuleDao;
+
+import java.util.Date;
+import java.util.List;
 
 public class NMRSAppointmentModuleServiceImpl extends BaseOpenmrsService implements NMRSAppointmentModuleService {
 	
@@ -48,5 +54,15 @@ public class NMRSAppointmentModuleServiceImpl extends BaseOpenmrsService impleme
 		}
 		
 		return dao.saveItem(item);
+	}
+
+	@Override
+	public List<PersonName> getPatients(List<Integer> patientIds) throws APIException {
+		return dao.getPatients(patientIds, false);
+	}
+
+	@Override
+	public List<PersonName> getPatientsByDemoGraphics(String firstNameLastNameArtNumber) throws APIException {
+		return dao.getPatientsByDemoGraphics(firstNameLastNameArtNumber, false);
 	}
 }

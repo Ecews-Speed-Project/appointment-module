@@ -9,12 +9,17 @@
  */
 package org.openmrs.module.nmrsappointment.api;
 
+import org.openmrs.Patient;
+import org.openmrs.PersonName;
 import org.openmrs.annotation.Authorized;
 import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.nmrsappointment.NMRSAppointmentModuleConfig;
 import org.openmrs.module.nmrsappointment.Item;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * The main service of this module, which is exposed for other modules. See
@@ -45,4 +50,11 @@ public interface NMRSAppointmentModuleService extends OpenmrsService {
 	@Authorized(NMRSAppointmentModuleConfig.MODULE_PRIVILEGE)
 	@Transactional
 	Item saveItem(Item item) throws APIException;
+
+	@Authorized(NMRSAppointmentModuleConfig.MODULE_PRIVILEGE)
+	List<PersonName> getPatients(List<Integer> patientIds) throws APIException;
+
+	@Authorized(NMRSAppointmentModuleConfig.MODULE_PRIVILEGE)
+	List<PersonName> getPatientsByDemoGraphics(String firstNameLastNameArtNumber) throws APIException;
+
 }

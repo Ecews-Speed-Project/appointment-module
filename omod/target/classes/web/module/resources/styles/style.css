@@ -77,7 +77,9 @@
             background-color: #D0F0DB;
             color: #00463f;
         }
-
+         .green-bg{
+            background-color: #00463f !important;
+         }
 
         .percent{
             border-radius: 4px;
@@ -127,6 +129,102 @@
             cursor: pointer;
             padding-left:5px;
         }
+
+        #body-wrapper{
+            position: relative !important;
+        }
+
+        #newAppt {
+          overflow: scroll;
+          box-sizing: border-box;
+          display: none;
+          position: absolute;
+          top: 0 !important;
+          bottom: 0 !important;
+          width: 55%;
+          height: 100%;
+          margin:0 !important;
+          right: 0 !important;
+          animation-duration: 0.5s;
+          animation-name: animate-pop;
+          animation-timing-function: cubic-bezier(.26, .53, .74, 1.48);
+          background-color: rgb(241, 245, 249);
+        }
+
+        @keyframes animate-pop {
+          0% {
+            opacity: 0;
+            transform: scale(0.5, 0.5);
+          }
+
+          100% {
+            opacity: 1;
+            transform: scale(1, 1);
+          }
+        }
+
+        .new-appt-head{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #00463f;
+            color: #fff;
+            font-size: 12pt;
+            font-weight: bold;
+        }
+
+        #closeAppt{
+            font-size: 18pt !important;
+            cursor: pointer;
+        }
+
+        .pat-search-form{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .pat-search-input{
+            height: 45px;
+            width: 80%;
+        }
+
+
+        .pat-search-btn{
+            width:30%;
+            height: 45px;
+            background-color: #00463f;
+            text-decoration: none !important;
+            color: #fff !important;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .pat-search-btn:hover{
+            opacity: 0.9;
+        }
+
+        .pat-appt-btn{
+            width:100%;
+            height: 45px;
+            background-color: #00463f;
+            text-decoration: none !important;
+            color: #fff !important;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .pat-appt-btn:hover{
+            opacity: 0.9;
+        }
+
+
+
 
 
 

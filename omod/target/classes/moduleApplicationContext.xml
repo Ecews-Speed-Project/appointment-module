@@ -25,16 +25,20 @@
 
     <context:component-scan base-package="org.openmrs.module.nmrsappointment" />
 
-    <!-- Wraps NMRSAppointmentModuleService methods in DB transactions and OpenMRS interceptors,
-    which set audit info like dateCreated, changedBy, etc.-->
+    <bean id="nmrsappointment.nmrsappointmentDao" class="org.openmrs.module.nmrsappointment.api.dao.NMRSAppointmentModuleDao">
+        <property name="sessionFactory">
+            <ref bean="dbSessionFactory"/>
+        </property>
+    </bean>
+
     <bean id="nmrsappointment.NMRSAppointmentModuleService"
-            class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+          class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
         <property name="transactionManager">
             <ref bean="transactionManager" />
         </property>
         <property name="target">
             <bean class="org.openmrs.module.nmrsappointment.api.impl.NMRSAppointmentModuleServiceImpl">
-                <property name="dao" ref="nmrsappointment.NMRSAppointmentModuleDao" />
+                <property name="dao" ref="nmrsappointment.nmrsappointmentDao" />
             </bean>
         </property>
         <property name="preInterceptors">
@@ -44,7 +48,14 @@
             <ref bean="transactionAttributeSource" />
         </property>
     </bean>
-
+    <bean parent="serviceContext">
+        <property name="moduleService">
+            <list>
+                <value>org.openmrs.module.nmrsappointment.api.NMRSAppointmentModuleService</value>
+                <ref bean="nmrsappointment.NMRSAppointmentModuleService" />
+            </list>
+        </property>
+    </bean>
     <!-- Adds NMRSAppointmentModuleService to OpenMRS context so it can be accessed
     calling Context.getService(NMRSAppointmentModuleService.class) -->
     <bean parent="serviceContext">

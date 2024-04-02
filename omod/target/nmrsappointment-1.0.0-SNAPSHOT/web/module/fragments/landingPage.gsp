@@ -1,5 +1,52 @@
+ <div id="newAppt" class="">
+     <div class="new-appt-head px-2 py-3">
+        <p>Create Appointment</p>
+        <i class="fa-regular fa-circle-xmark" onClick="closeAppt()" id="closeAppt"></i>
+     </div>
+     <div class="pat-search-and-result">
+         <div class="pat-search-form py-3 px-2">
+            <input type="text" class="pat-search-input" oninput="findAppointmentPatient(this.value)" placeholder="Enter patient name or ART Number">
+            <a class="pat-search-btn mx-auto my-auto">Search</a>
+         </div>
+         <div class="pat-search-result px-2 py-3" id="psr"></div>
+     </div>
+
+     <div class="pat-new-appt px-4 py-3 fw-bold hidden">
+         <form class="form form-inline new-appt-form row">
+            <div class="col-md-6">
+                Appointment Date: <input type="date" id="apptDate" class="form-control">
+            </div>
+            <div class="col-md-6">
+                Appointment Type:
+                    <select  id="apptType" class="form-control form-select">
+                        <option></option>
+                        <option value="drug refill">Drug Refill</option>
+                        <option value="eac">EAC</option>
+                        <option value="viral load">Viral Load</option>
+                    </select>
+            </div>
+            <div class="col-md-12 py-2">
+                <label class="form-label">Notes / Comments </label>
+                <textarea rows="5" id="apptNotes"></textarea>
+            </div>
+            <div class="col-md-6 py-3">
+                 Visit Date: <input type="date" id="visitDate" class="form-control">
+             </div>
+             <div class="col-md-6 py-3">
+                 Provider's Name:
+                     <select  id="providerName" class="form-control form-select">
+                         <option></option>
+
+                     </select>
+             </div>
+            <div class="col-md-12 py-4">
+                <a class="pat-appt-btn mx-auto my-auto">Save</a>
+            </div>
+         </form>
+     </div>
+ </div>
  <main class="mainDiv">
-        <div class="appt">
+        <div class="patient-result">
 
             <div class="title">
                 <h3>
@@ -16,18 +63,20 @@
                             End Date: <input type="date" id="endDate" class="form-control">
                         </div>
                         <div>
-                            <a href="#" class="btn btn-success btn-search py-2 px-4">
+                            <a class="btn btn-success btn-search py-2 px-4">
                                 Search <i class="fa-solid fa-search"></i>
                             </a>
                         </div>
                     </form>
                 </div>
                 <div class="btn-Appt">
-                    <a href="#" class="btn btn-success btn-appt py-2 px-4">
+                    <a  onClick="openAppt()" id="openAppt" class="btn btn-success btn-appt py-2 px-4">
                         Create New Appointment <i class="fa-solid fa-hospital"></i>
                      </a>
                 </div>
             </div>
+
+
             <div class="landingPage">
                 <div>
                     <div class="icon-bg">
@@ -70,7 +119,6 @@
                     </div>
                 </div>
             </div>
-            <hr>
             <div class="appt-list">
             <table class="table  table-bordered table-hover">
               <caption class="caption-top captions">
