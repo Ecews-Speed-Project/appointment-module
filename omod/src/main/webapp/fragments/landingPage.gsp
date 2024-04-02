@@ -1,3 +1,6 @@
+<script>
+  let url = "${ ui.actionLink("nmrsappointment", "users", "fetchPatient") }"
+</script>
  <div id="newAppt" class="">
      <div class="new-appt-head px-2 py-3">
         <p>Create Appointment</p>
@@ -5,7 +8,7 @@
      </div>
      <div class="pat-search-and-result">
          <div class="pat-search-form py-3 px-2">
-            <input type="text" class="pat-search-input" oninput="findAppointmentPatient(this.value)" placeholder="Enter patient name or ART Number">
+            <input type="text" class="pat-search-input" oninput="findAppointmentPatientServer(this.value)" placeholder="Enter patient name or ART Number">
             <a class="pat-search-btn mx-auto my-auto">Search</a>
          </div>
          <div class="pat-search-result px-2 py-3" id="psr"></div>

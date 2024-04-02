@@ -1,0 +1,17 @@
+[
+  {
+    "id": "${project.parent.artifactId}.nmrsappointment",
+    "description": "Patients Appointments",
+    "order": 22,
+    "extensions": [
+      {
+        "id": "nmrsappointment.homepageLink",
+        "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+        "type": "link",
+        "label": "Patients Appointments",
+        "url": "nmrsappointment/nmrsappointment.page",
+        "icon": "icon-refresh"
+      }
+    ]
+  }
+]

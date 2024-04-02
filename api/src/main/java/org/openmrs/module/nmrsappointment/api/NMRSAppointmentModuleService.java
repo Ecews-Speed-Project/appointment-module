@@ -10,6 +10,7 @@
 package org.openmrs.module.nmrsappointment.api;
 
 import org.openmrs.Patient;
+import org.openmrs.Person;
 import org.openmrs.PersonName;
 import org.openmrs.annotation.Authorized;
 import org.openmrs.api.APIException;
@@ -50,11 +51,11 @@ public interface NMRSAppointmentModuleService extends OpenmrsService {
 	@Authorized(NMRSAppointmentModuleConfig.MODULE_PRIVILEGE)
 	@Transactional
 	Item saveItem(Item item) throws APIException;
-
+	
 	@Authorized(NMRSAppointmentModuleConfig.MODULE_PRIVILEGE)
-	List<PersonName> getPatients(List<Integer> patientIds) throws APIException;
-
+	List<Person> getPatients(List<Integer> patientIds) throws APIException;
+	
 	@Authorized(NMRSAppointmentModuleConfig.MODULE_PRIVILEGE)
-	List<PersonName> getPatientsByDemoGraphics(String firstNameLastNameArtNumber) throws APIException;
-
+	List<Person> getPatientsByDemoGraphics(String firstNameLastNameArtNumber) throws APIException;
+	
 }

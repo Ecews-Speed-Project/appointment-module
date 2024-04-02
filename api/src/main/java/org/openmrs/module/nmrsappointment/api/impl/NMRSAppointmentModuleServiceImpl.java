@@ -10,6 +10,7 @@
 package org.openmrs.module.nmrsappointment.api.impl;
 
 import org.openmrs.Patient;
+import org.openmrs.Person;
 import org.openmrs.PersonName;
 import org.openmrs.api.APIException;
 import org.openmrs.api.UserService;
@@ -55,14 +56,14 @@ public class NMRSAppointmentModuleServiceImpl extends BaseOpenmrsService impleme
 		
 		return dao.saveItem(item);
 	}
-
+	
 	@Override
-	public List<PersonName> getPatients(List<Integer> patientIds) throws APIException {
+	public List<Person> getPatients(List<Integer> patientIds) throws APIException {
 		return dao.getPatients(patientIds, false);
 	}
-
+	
 	@Override
-	public List<PersonName> getPatientsByDemoGraphics(String firstNameLastNameArtNumber) throws APIException {
+	public List<Person> getPatientsByDemoGraphics(String firstNameLastNameArtNumber) throws APIException {
 		return dao.getPatientsByDemoGraphics(firstNameLastNameArtNumber, false);
 	}
 }
