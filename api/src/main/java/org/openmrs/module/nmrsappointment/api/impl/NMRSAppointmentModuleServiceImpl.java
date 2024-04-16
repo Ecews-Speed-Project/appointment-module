@@ -19,6 +19,8 @@ import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.nmrsappointment.Item;
 import org.openmrs.module.nmrsappointment.api.NMRSAppointmentModuleService;
 import org.openmrs.module.nmrsappointment.api.dao.NMRSAppointmentModuleDao;
+import org.openmrs.module.nmrsappointment.api.models.NDRExport;
+import org.openmrs.module.nmrsappointment.api.models.NMRSAppointment;
 
 import java.util.Date;
 import java.util.List;
@@ -49,12 +51,13 @@ public class NMRSAppointmentModuleServiceImpl extends BaseOpenmrsService impleme
 	}
 	
 	@Override
-	public Item saveItem(Item item) throws APIException {
-		if (item.getOwner() == null) {
-			item.setOwner(userService.getUser(1));
-		}
-		
-		return dao.saveItem(item);
+	public NMRSAppointment saveAppointment(NMRSAppointment appointment) throws APIException {
+		return dao.saveAppointment(appointment);
+	}
+	
+	@Override
+	public List<NMRSAppointment> getAppointments() throws APIException {
+		return dao.getAppointments();
 	}
 	
 	@Override

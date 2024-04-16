@@ -1,8 +1,9 @@
+
 [
   {
     "id": "${project.parent.artifactId}.nmrsappointment",
     "description": "Patients Appointments",
-    "order": 22,
+    "order": 21,
     "extensions": [
       {
         "id": "nmrsappointment.homepageLink",

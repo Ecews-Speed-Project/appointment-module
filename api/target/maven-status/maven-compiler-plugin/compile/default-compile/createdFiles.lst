@@ -1,8 +1,12 @@
 org\openmrs\module\nmrsappointment\api\impl\NMRSAppointmentModuleServiceImpl.class
 org\openmrs\module\nmrsappointment\api\models\PatientData.class
 org\openmrs\module\nmrsappointment\NMRSAppointmentModuleConfig.class
+org\openmrs\module\nmrsappointment\api\viewModel\Appointments.class
+org\openmrs\module\nmrsappointment\api\SingleClassDAO.class
 org\openmrs\module\nmrsappointment\NMRSAppointmentModuleActivator.class
 org\openmrs\module\nmrsappointment\api\NMRSAppointmentModuleService.class
 org\openmrs\module\nmrsappointment\Item.class
 org\openmrs\module\nmrsappointment\api\models\Response.class
+org\openmrs\module\nmrsappointment\api\models\NMRSAppointment.class
+org\openmrs\module\nmrsappointment\api\models\NDRExport.class
 org\openmrs\module\nmrsappointment\api\dao\NMRSAppointmentModuleDao.class

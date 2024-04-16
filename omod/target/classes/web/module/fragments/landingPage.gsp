@@ -46,7 +46,7 @@
                      </select>
              </div>
             <div class="col-md-12 py-4">
-                <a class="pat-appt-btn mx-auto my-auto">Save</a>
+                <a class="pat-appt-btn mx-auto my-auto" onClick="creatAppointment()">Save</a>
             </div>
          </form>
      </div>
