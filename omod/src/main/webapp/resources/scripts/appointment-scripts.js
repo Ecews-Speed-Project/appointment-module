@@ -121,7 +121,7 @@ function fetchAppointments() {
                <td>${patient.appointmentType} Appointment</td>
                <td>${statusSpan}</td>
                <td>${patient.nextAppointmentDate}</td>
-               <td><a href="#">View details</a></td>
+               <td><a href="/openmrs/coreapps/clinicianfacing/patient.page?patientId=${patient.lunchView.replace(/_/g, "-")}">View details</a></td>
            </tr>`;
         });
 

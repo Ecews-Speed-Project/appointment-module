@@ -1,7 +1,10 @@
 package org.openmrs.module.nmrsappointment.api.viewModel;
 
+import org.openmrs.Patient;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 public class Appointments implements Serializable {
 	
@@ -20,6 +23,16 @@ public class Appointments implements Serializable {
 	private String comment;
 	
 	private String baseline;
+	
+	private String lunchView;
+	
+	public String getLunchView() {
+		return lunchView;
+	}
+	
+	public void setLunchView(String lunchView) {
+		this.lunchView = lunchView;
+	}
 	
 	public String getBaseline() {
 		return baseline;

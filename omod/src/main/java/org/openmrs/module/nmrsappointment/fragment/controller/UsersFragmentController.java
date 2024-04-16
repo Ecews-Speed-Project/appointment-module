@@ -27,13 +27,16 @@ import org.openmrs.module.nmrsappointment.api.models.Response;
 import org.openmrs.module.nmrsappointment.api.viewModel.Appointments;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
+import org.openmrs.util.OpenmrsUtil;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -70,6 +73,9 @@ public class UsersFragmentController {
 			appointment.setAppointmentType(nmrsAppt.getType());
 			appointment.setBaseline("Yes");
 			appointment.setRecapture("Yes");
+			String ss = nmrsAppt.getPatient().getUuid().replaceAll("-", "_");
+			System.out.println(ss);
+			appointment.setLunchView(ss);
 			appointmentsList.add(appointment);
 		}
 		

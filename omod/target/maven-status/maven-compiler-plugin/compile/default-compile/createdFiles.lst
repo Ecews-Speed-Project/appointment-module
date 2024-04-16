@@ -1,3 +1,0 @@
-org\openmrs\module\nmrsappointment\extension\html\AdminList.class
-org\openmrs\module\nmrsappointment\web\controller\NMRSAppointmentModuleController.class
-org\openmrs\module\nmrsappointment\fragment\controller\UsersFragmentController.class
