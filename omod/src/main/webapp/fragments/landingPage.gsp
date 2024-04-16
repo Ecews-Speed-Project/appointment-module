@@ -46,7 +46,7 @@
                      </select>
              </div>
             <div class="col-md-12 py-4">
-                <a class="pat-appt-btn mx-auto my-auto" onClick="creatAppointment()">Save</a>
+                <a class="pat-appt-btn mx-auto my-auto" onClick="createAppointment()">Save</a>
             </div>
          </form>
      </div>
@@ -77,7 +77,7 @@
                 </div>
                 <div class="btn-Appt">
                     <a  onClick="openAppt()" id="openAppt" class="btn btn-success btn-appt py-2 px-4">
-                        Create New Appointment <i class="fa-solid fa-hospital"></i>
+                        Create New Appointment <i class="fa-regular fa-calendar"></i>
                      </a>
                 </div>
             </div>
