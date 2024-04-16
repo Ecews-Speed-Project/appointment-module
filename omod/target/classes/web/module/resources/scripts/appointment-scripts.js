@@ -32,7 +32,7 @@ const openAppt = () => {
 }
 
 
-const creatAppointment = () => {
+const createAppointment = () => {
     jq = jQuery;
     let url = "/nmrsappointment/users/saveAppointments.action";
 
@@ -81,7 +81,28 @@ const closeAppt = () => {
     search_input.value = '';
 }
 
+//format date
+const formatDate = (dateString) =>{
+
+    const date = new Date(dateString);
+    date.setUTCHours(date.getUTCHours() + 1);
+    const formattedDate = date.toISOString().split('T')[0];
+    //console.log(formattedDate);
+
+    return formattedDate;
+}
+
+//change to title case
+
+function titleCase(str) {
+    return str.toLowerCase().split(' ').map(function (word) {
+        return (word.charAt(0).toUpperCase() + word.slice(1));
+    }).join(' ');
+}
+
 function fetchAppointments() {
+    const baseUrl = window.location.origin;
+    const endPoint = '/openmrs/coreapps/clinicianfacing/patient.page?patientId='
     jq = jQuery;
     let searchResults = 'sdsd';
     let url = "/nmrsappointment/users/fetchAppointments.action";
@@ -94,9 +115,9 @@ function fetchAppointments() {
     }).success(function (data) {
         const todayAppt = document.getElementById("todayAppt");
         let tableRow = '';
-        //  const currentDate = new Date().toISOString().slice(0, 10);
+        // const currentDate = new Date().toISOString().slice(0, 10);
         // const currentAppt = data.filter(records => records.date == currentDate);
-        data.map(patient => {
+        data.sort((a,b) => a.nextAppointmentDate > b.nextAppointmentDate ? -1 : 1).map(patient => {
             const statusSpan = patient.status === "Pending"
                 ? `<span class="bg-info-subtle status-span">${patient.status}</span>`
                 : patient.status === "Appointment kept"
@@ -118,10 +139,12 @@ function fetchAppointments() {
                 <p class="patientName hidden">${patient.patientName}</p>
                 <p class="fw-bold">**********</p>
                </td>
-               <td>${patient.appointmentType} Appointment</td>
+               <td>${titleCase(patient.appointmentType)} Appointment</td>
                <td>${statusSpan}</td>
+               <td>${formatDate(patient.nextAppointmentDate)}</td>
+               <td><a href=${baseUrl+endPoint+patient.uuid}>View details</a></td>
                <td>${patient.nextAppointmentDate}</td>
-               <td><a href="#">View details</a></td>
+               <td><a href="/openmrs/coreapps/clinicianfacing/patient.page?patientId=${patient.lunchView.replace(/_/g, "-")}">View details</a></td>
            </tr>`;
         });
 

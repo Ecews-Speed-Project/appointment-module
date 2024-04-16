@@ -143,6 +143,8 @@ function fetchAppointments() {
                <td>${statusSpan}</td>
                <td>${formatDate(patient.nextAppointmentDate)}</td>
                <td><a href=${baseUrl+endPoint+patient.uuid}>View details</a></td>
+               <td>${patient.nextAppointmentDate}</td>
+               <td><a href="/openmrs/coreapps/clinicianfacing/patient.page?patientId=${patient.lunchView.replace(/_/g, "-")}">View details</a></td>
            </tr>`;
         });
 
