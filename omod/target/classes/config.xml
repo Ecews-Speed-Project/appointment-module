@@ -33,12 +33,16 @@
 			org.openmrs.module.appui
 		</require_module>
 	</require_modules>
-	
+
+
+
+
 	<!-- Extensions -->
 	<extension>
 		<point>org.openmrs.admin.list</point>
 		<class>org.openmrs.module.nmrsappointment.extension.html.AdminList</class>
 	</extension>
+
 
 	<aware_of_modules>
 		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>

@@ -1,1 +1,4 @@
+org\openmrs\module\nmrsappointment\api\models\NmrsAppointment.class
+org\openmrs\module\nmrsappointment\NmrsAppointment.class
 org\openmrs\module\nmrsappointment\AdminListExtensionTest.class
+org\openmrs\module\nmrsappointment\api\models\AppointmentschedulingAppointmentType.class

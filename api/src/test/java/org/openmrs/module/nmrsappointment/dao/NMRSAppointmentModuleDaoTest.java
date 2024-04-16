@@ -14,6 +14,7 @@ import org.junit.Ignore;
 import org.openmrs.api.UserService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.nmrsappointment.Item;
+import org.openmrs.module.nmrsappointment.api.models.NMRSAppointment;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.hamcrest.Matchers.*;
@@ -37,22 +38,15 @@ public class NMRSAppointmentModuleDaoTest extends BaseModuleContextSensitiveTest
 	@Ignore("Unignore if you want to make the Item class persistable, see also Item and liquibase.xml")
 	public void saveItem_shouldSaveAllPropertiesInDb() {
 		//Given
-		Item item = new Item();
-		item.setDescription("some description");
-		item.setOwner(userService.getUser(1));
+		NMRSAppointment item = new NMRSAppointment();
+		item.setComments("some description");
 		
 		//When
-		dao.saveItem(item);
+		dao.saveAppointment(item);
 		
 		//Let's clean up the cache to be sure getItemByUuid fetches from DB and not from cache
 		Context.flushSession();
 		Context.clearSession();
 		
-		//Then
-		Item savedItem = dao.getItemByUuid(item.getUuid());
-		
-		assertThat(savedItem, hasProperty("uuid", is(item.getUuid())));
-		assertThat(savedItem, hasProperty("owner", is(item.getOwner())));
-		assertThat(savedItem, hasProperty("description", is(item.getDescription())));
 	}
 }

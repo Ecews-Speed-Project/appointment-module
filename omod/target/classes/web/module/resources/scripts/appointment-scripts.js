@@ -1,42 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-    fetch("/ms/uiframework/resource/nmrsappointment/scripts/patientAppointments.json")
-        .then(response => response.json())
-        .then(data => {
-            const todayAppt = document.getElementById("todayAppt");
-            let tableRow = '';
-            const currentDate = new Date().toISOString().slice(0, 10);
-            const currentAppt = data.filter(records => records.date == currentDate);
-            currentAppt.slice(0, 8).map(patient => {
-                const statusSpan = patient.status === "Pending"
-                    ? `<span class="bg-info-subtle status-span">${patient.status}</span>`
-                    : patient.status === "Appointment kept"
-                        ? `<span class="bg-success-subtle status-span">${patient.status}</span>`
-                        : patient.status === "Missed"
-                            ? `<span class="bg-danger-subtle status-span">${patient.status}</span>`
-                            : null;
 
-                const base_fp = patient.baseline === "Yes" ? `<i class="fa-solid fa-fingerprint"></i>`
-                    : null;
+    fetchAppointments()
 
-                const baseline = currentAppt.filter(record => record.baseline === "Yes").length;
-                const recapture = currentAppt.filter(record => record.recapture === "Yes").length;
-                const recapture_percent = Math.round((recapture / baseline) * 100);
-                tableRow += `<tr>
-               <td>
-                <span class="name-bold">${patient.id}</span>
-                <span class="inline-block float-end icon fs-4">${base_fp}</span>
-                <p class="patientName hidden">${patient.name}</p>
-                <p class="fw-bold">**********</p>
-               </td>
-               <td>${patient.apptType} Appointment</td>
-               <td>${statusSpan}</td>
-               <td>${patient.date}</td>
-               <td><a href="#">View details</a></td>
-           </tr>`;
-            });
-
-            todayAppt.innerHTML = tableRow;
-        })
 });
 
 function toggleNameShow() {
@@ -66,6 +31,47 @@ const openAppt = () => {
     getProviders();
 }
 
+
+const creatAppointment = () => {
+    jq = jQuery;
+    let url = "/nmrsappointment/users/saveAppointments.action";
+
+    const pdata = JSON.parse(localStorage.getItem("CurrentPatient"));
+    const apptNotes =  jq('#apptNotes').val();
+    const apptType =jq('#apptType').val();
+    const apptDate = jq('#apptDate').val();
+    const visitDate = jq('#visitDate').val();
+    const patientId = pdata[0].patientId;
+
+     var data =  {
+         'patientId': patientId,
+         'visitDate': visitDate,
+         'comments': apptNotes,
+         'type': apptType,
+         'appointmentDate': apptDate,
+     }
+     console.log(data)
+
+    jq.ajax({
+        url: url,
+        dataType: "json",
+        data: data
+
+    }).success(function (filename) {
+        location.reload();
+    }).error(function (xhr, status, err) {
+            console.log(status);
+            if (status === 'timeout') {
+                alert("the export will take a while, the list will be updated when it's done");
+            } else {
+                alert('There was an error generating all NDR files, check generated files at downloads directory in the application root folder ' + err);
+            }//popupDialog.close();
+           // jq('#gen-wait').hide();
+
+        });
+
+}
+
 const closeAppt = () => {
     const newAppt = document.getElementById('newAppt');
     const search_result = document.querySelector(".pat-search-result");
@@ -73,6 +79,54 @@ const closeAppt = () => {
     newAppt.style.display = "none";
     search_result.style.display = "none";
     search_input.value = '';
+}
+
+function fetchAppointments() {
+    jq = jQuery;
+    let searchResults = 'sdsd';
+    let url = "/nmrsappointment/users/fetchAppointments.action";
+    jq.ajax({
+        url: url,
+        dataType: "json",
+        data: {
+            'searchText': searchResults
+        }
+    }).success(function (data) {
+        const todayAppt = document.getElementById("todayAppt");
+        let tableRow = '';
+        //  const currentDate = new Date().toISOString().slice(0, 10);
+        // const currentAppt = data.filter(records => records.date == currentDate);
+        data.map(patient => {
+            const statusSpan = patient.status === "Pending"
+                ? `<span class="bg-info-subtle status-span">${patient.status}</span>`
+                : patient.status === "Appointment kept"
+                    ? `<span class="bg-success-subtle status-span">${patient.status}</span>`
+                    : patient.status === "Missed"
+                        ? `<span class="bg-danger-subtle status-span">${patient.status}</span>`
+                        : null;
+
+            const base_fp = patient.baseline === "Yes" ? `<i class="fa-solid fa-fingerprint"></i>`
+                : null;
+
+            const baseline = data.filter(record => record.baseline === "Yes").length;
+            const recapture = data.filter(record => record.recapture === "Yes").length;
+            const recapture_percent = Math.round((recapture / baseline) * 100);
+            tableRow += `<tr>
+               <td>
+                <span class="name-bold">${patient.identifier}</span>
+                <span class="inline-block float-end icon fs-4">${base_fp}</span>
+                <p class="patientName hidden">${patient.patientName}</p>
+                <p class="fw-bold">**********</p>
+               </td>
+               <td>${patient.appointmentType} Appointment</td>
+               <td>${statusSpan}</td>
+               <td>${patient.nextAppointmentDate}</td>
+               <td><a href="#">View details</a></td>
+           </tr>`;
+        });
+
+        todayAppt.innerHTML = tableRow;
+    })
 }
 
 function findAppointmentPatientServer(searchTextServer) {
@@ -86,20 +140,63 @@ function findAppointmentPatientServer(searchTextServer) {
             url: url,
             dataType: "json",
             data: {
-                'searchText' : searchTextServer
+                'searchText': searchTextServer
             }
-        }).success(function(res)
-        {
-            var responseObject = JSON.parse(res);
+        }).success(function (res) {
+            const currentPatient = (id) => res.filter(patient => patient.patientId == id);
 
-            console.log( responseObject.length)
-         /*   if (responseObject.length < 1) {
+            if (res.length < 1) {
                 searchDisplay = `<h1>No Patient Found!</h1>`;
                 searchResults.style.display = 'block';
                 searchResults.innerHTML = searchDisplay;
-            }else{
-                console.log(res)
-            }*/
+            } else {
+                searchResults.style.display = 'block';
+                res.sort((a, b) => a.name > b.name ? 1 : -1).map(patient => {
+                    searchDisplay += `
+                                <p class="patientId py-3 px-2 border-bottom border-success-subtle"
+                                    data-patient-id=${patient.patientId}>
+                                    ${patient.name}
+                                </p>
+                            `;
+
+                });
+
+                searchResults.innerHTML = searchDisplay;
+
+                const patientNameElements = document.querySelectorAll('.patientId');
+                patientNameElements.forEach(element => {
+                    element.addEventListener('click', () => {
+                        const patientId = element.getAttribute('data-patient-id');
+                        console.log(patientId)
+                        if (localStorage.getItem('CurrentPatient')) {
+                            // If the item exists, delete it
+                            localStorage.removeItem('CurrentPatient');
+                        }
+                        // Add a new item to localStorage
+                        const curPatient = JSON.stringify(currentPatient(patientId));
+                        console.log(curPatient)
+
+                        localStorage.setItem('CurrentPatient', curPatient);
+
+                        const search_result = document.querySelector(".pat-search-and-result");
+                        const searchResults = document.querySelector(".pat-search-result");
+                        const search_input = document.querySelector(".pat-search-input");
+                        const newPatientAppt = document.querySelector(".pat-new-appt");
+                        search_result.style.display = 'none';
+                        newPatientAppt.style.display = 'block';
+                        search_input.value = '';
+                        searchResults.style.display = 'none';
+
+                        const patient_details = document.querySelector(".pat-new-appt-head");
+                        const pdata = JSON.parse(localStorage.getItem("CurrentPatient"));
+                        const isPBS = pdata[0].baseline === "Yes" ?
+                            `<i class="fa-solid fa-fingerprint"></i>` : "No Base PBS";
+                        patient_details.innerHTML = `
+                                               <p>${pdata[0].name} ${isPBS}</p>
+                                           `;
+                    });
+                });
+            }
 
         })
 

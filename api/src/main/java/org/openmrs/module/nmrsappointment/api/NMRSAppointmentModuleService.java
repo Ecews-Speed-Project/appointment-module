@@ -17,6 +17,8 @@ import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.nmrsappointment.NMRSAppointmentModuleConfig;
 import org.openmrs.module.nmrsappointment.Item;
+import org.openmrs.module.nmrsappointment.api.models.NDRExport;
+import org.openmrs.module.nmrsappointment.api.models.NMRSAppointment;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
@@ -44,13 +46,16 @@ public interface NMRSAppointmentModuleService extends OpenmrsService {
 	 * Saves an item. Sets the owner to superuser, if it is not set. It can be called by users with
 	 * this module's privilege. It is executed in a transaction.
 	 * 
-	 * @param item
+	 * @param nmrsAppointment
 	 * @return
 	 * @throws APIException
 	 */
 	@Authorized(NMRSAppointmentModuleConfig.MODULE_PRIVILEGE)
 	@Transactional
-	Item saveItem(Item item) throws APIException;
+	NMRSAppointment saveAppointment(NMRSAppointment nmrsAppointment) throws APIException;
+	
+	@Authorized(NMRSAppointmentModuleConfig.MODULE_PRIVILEGE)
+	List<NMRSAppointment> getAppointments() throws APIException;
 	
 	@Authorized(NMRSAppointmentModuleConfig.MODULE_PRIVILEGE)
 	List<Person> getPatients(List<Integer> patientIds) throws APIException;

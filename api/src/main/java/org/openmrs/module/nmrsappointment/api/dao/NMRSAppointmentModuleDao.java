@@ -19,8 +19,11 @@ import org.openmrs.api.db.DAOException;
 import org.openmrs.api.db.hibernate.DbSession;
 import org.openmrs.api.db.hibernate.DbSessionFactory;
 import org.openmrs.module.nmrsappointment.Item;
+import org.openmrs.module.nmrsappointment.api.models.NDRExport;
+import org.openmrs.module.nmrsappointment.api.models.NMRSAppointment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,9 +46,15 @@ public class NMRSAppointmentModuleDao {
 		return (Item) getSession().createCriteria(Item.class).add(Restrictions.eq("uuid", uuid)).uniqueResult();
 	}
 	
-	public Item saveItem(Item item) {
-		getSession().saveOrUpdate(item);
-		return item;
+	public NMRSAppointment saveAppointment(NMRSAppointment nmrsAppointment) {
+		getSession().saveOrUpdate(nmrsAppointment);
+		return nmrsAppointment;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<NMRSAppointment> getAppointments() throws DAOException {
+		Criteria criteria = getSession().createCriteria(NMRSAppointment.class);
+		return criteria.list();
 	}
 	
 	public List<Person> getPatients(List<Integer> patientIds, boolean includeVoided) throws DAOException {

@@ -7,6 +7,8 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
+
+
 	<artifactId>nmrsappointment-api</artifactId>
 	<packaging>jar</packaging>
 	<name>NMRS Appointment Module API</name>
