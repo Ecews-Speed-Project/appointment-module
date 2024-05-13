@@ -113,7 +113,24 @@ function fetchAppointments() {
             'searchText': searchResults
         }
     }).success(function (data) {
+    //console.log(data.length)
         const todayAppt = document.getElementById("todayAppt");
+        const apptValue = document.getElementById("apptValue");
+        const baseValue = document.getElementById("baseValue");
+        const recaptureValue = document.getElementById("recaptureValue");
+        const pbsPercent = document.getElementById("pbsPercent");
+        const noPbs = document.getElementById("noPbs");
+        const noPbsPercent = document.getElementById("noPbsPercent");
+
+        const pbs = data.filter(pbs => pbs.baseline === 'Yes').length;
+        const recapture = data.filter(pbs => pbs.recapture === 'Yes').length
+        //populate the values
+        apptValue.innerText = data.length;
+        baseValue.innerText = pbs;
+        recaptureValue.innerText = recapture;
+        pbsPercent.innerText = Math.round((recapture / pbs) * 100) + "%";
+        noPbs.innerText =  pbs - recapture;
+        noPbsPercent.innerText = Math.round((pbs - recapture) / pbs  * 100) + "%";
         let tableRow = '';
         // const currentDate = new Date().toISOString().slice(0, 10);
         // const currentAppt = data.filter(records => records.date == currentDate);
@@ -129,9 +146,7 @@ function fetchAppointments() {
             const base_fp = patient.baseline === "Yes" ? `<i class="fa-solid fa-fingerprint"></i>`
                 : null;
 
-            const baseline = data.filter(record => record.baseline === "Yes").length;
-            const recapture = data.filter(record => record.recapture === "Yes").length;
-            const recapture_percent = Math.round((recapture / baseline) * 100);
+
             tableRow += `<tr>
                <td>
                 <span class="name-bold">${patient.identifier}</span>
@@ -142,8 +157,6 @@ function fetchAppointments() {
                <td>${titleCase(patient.appointmentType)} Appointment</td>
                <td>${statusSpan}</td>
                <td>${formatDate(patient.nextAppointmentDate)}</td>
-               <td><a href=${baseUrl+endPoint+patient.uuid}>View details</a></td>
-               <td>${patient.nextAppointmentDate}</td>
                <td><a href="/openmrs/coreapps/clinicianfacing/patient.page?patientId=${patient.lunchView.replace(/_/g, "-")}">View details</a></td>
            </tr>`;
         });
@@ -230,73 +243,71 @@ function findAppointmentPatientServer(searchTextServer) {
 
 }
 
-function findAppointmentPatient(searchText) {
-    let searchResults = document.querySelector(".pat-search-result");
-    let searchDisplay = '';
-    if (searchText.length >= 2) {
+function filterPatientAppointment() {
+    let jq = jQuery;
+    const startDate = jq("#startDate").val();
+    const endDate = jq("#endDate").val();
+    let filterResults = document.querySelector(".pat-search-result");
+    let filterDisplay = '';
         fetch("/ms/uiframework/resource/nmrsappointment/scripts/patientAppointments.json")
             .then(response => response.json())
             .then(data => {
-                const filteredPatients = data.filter(patient => patient.name.toLowerCase().includes(searchText.toLowerCase()));
-                const currentPatient = (id) => data.filter(patient => patient.id === id);
+                const filteredPatients = data.filter(patient => patient.date >= startDate && patient.date <= endDate);
+                console.log(filteredPatients)
 
-                if (filteredPatients.length < 1) {
-                    searchDisplay = `<h1>No Patient Found!</h1>`;
-                    searchResults.style.display = 'block';
-                    searchResults.innerHTML = searchDisplay;
-                } else {
-                    searchResults.style.display = 'block';
-                    filteredPatients.sort((a, b) => a.name > b.name ? 1 : -1).map(patient => {
-                        searchDisplay += `
-                                <p class="patientId py-3 px-2 border-bottom border-success-subtle"
-                                    data-patient-id=${patient.id}>
-                                    ${patient.name}
-                                </p>
-                            `;
+                       const todayAppt = document.getElementById("todayAppt");
+                          const apptValue = document.getElementById("apptValue");
+                          const baseValue = document.getElementById("baseValue");
+                          const recaptureValue = document.getElementById("recaptureValue");
+                          const pbsPercent = document.getElementById("pbsPercent");
+                          const noPbs = document.getElementById("noPbs");
+                          const noPbsPercent = document.getElementById("noPbsPercent");
 
-                    });
+                          const pbs = filteredPatients.filter(pbs => pbs.baseline === 'Yes').length;
+                          const recapture = filteredPatients.filter(pbs => pbs.recapture === 'Yes').length
+                          //populate the values
+                          apptValue.innerText = filteredPatients.length;
+                          baseValue.innerText = pbs;
+                          recaptureValue.innerText = recapture;
+                          pbsPercent.innerText = Math.round((recapture / pbs) * 100) + "%";
+                          noPbs.innerText =  pbs - recapture;
+                          noPbsPercent.innerText = Math.round((pbs - recapture) / pbs  * 100) + "%";
+                          let tableRow = '';
+                          // const currentDate = new Date().toISOString().slice(0, 10);
+                          // const currentAppt = data.filter(records => records.date == currentDate);
+                          filteredPatients.sort((a,b) => a.date > b.date ? -1 : 1).map(patient => {
+                              const statusSpan = patient.status === "Pending"
+                                  ? `<span class="bg-info-subtle status-span">${patient.status}</span>`
+                                  : patient.status === "Appointment kept"
+                                      ? `<span class="bg-success-subtle status-span">${patient.status}</span>`
+                                      : patient.status === "Missed"
+                                          ? `<span class="bg-danger-subtle status-span">${patient.status}</span>`
+                                          : null;
 
-                    searchResults.innerHTML = searchDisplay;
+                              const base_fp = patient.baseline === "Yes" ? `<i class="fa-solid fa-fingerprint"></i>`
+                                  : null;
 
-                    const patientNameElements = document.querySelectorAll('.patientId');
-                    patientNameElements.forEach(element => {
-                        element.addEventListener('click', () => {
-                            const patientId = element.getAttribute('data-patient-id');
-                            if (localStorage.getItem('CurrentPatient')) {
-                                // If the item exists, delete it
-                                localStorage.removeItem('CurrentPatient');
-                            }
-                            // Add a new item to localStorage
-                            const cur_patient = JSON.stringify(currentPatient(patientId));
-                            localStorage.setItem('CurrentPatient', cur_patient);
+                              const baseline = data.filter(record => record.baseline === "Yes").length;
+                              const recapture = data.filter(record => record.recapture === "Yes").length;
+                              const recapture_percent = Math.round((recapture / baseline) * 100);
+                              tableRow += `<tr>
+                                 <td>
+                                  <span class="name-bold">${patient.id}</span>
+                                  <span class="inline-block float-end icon fs-4">${base_fp}</span>
+                                  <p class="patientName hidden">${patient.name}</p>
+                                  <p class="fw-bold">**********</p>
+                                 </td>
+                                 <td>${titleCase(patient.apptType)} Appointment</td>
+                                 <td>${statusSpan}</td>
+                                 <td>${patient.date}</td>
+                                 <td><a href="/openmrs/coreapps/clinicianfacing/patient.page?patientId=${patient.id}">View details</a></td>
+                             </tr>`;
+                          });
 
-                            const search_result = document.querySelector(".pat-search-and-result");
-                            const searchResults = document.querySelector(".pat-search-result");
-                            const search_input = document.querySelector(".pat-search-input");
-                            const newPatientAppt = document.querySelector(".pat-new-appt");
-                            search_result.style.display = 'none';
-                            newPatientAppt.style.display = 'block';
-                            search_input.value = '';
-                            searchResults.style.display = 'none';
-
-                            const patient_details = document.querySelector(".pat-new-appt-head");
-                            const pdata = JSON.parse(localStorage.getItem("CurrentPatient"));
-                            const isPBS = pdata[0].baseline === "Yes" ?
-                                `<i class="fa-solid fa-fingerprint"></i>` : "No Base PBS";
-                            patient_details.innerHTML = `
-                                               <p>${pdata[0].name} ${isPBS}</p>
-                                           `;
-                        });
-                    });
-                }
-
-
+                          todayAppt.innerHTML = tableRow;
             })
 
-    } else {
-        searchDisplay += '';
-        searchResults.innerHTML = searchDisplay;
-    }
+
 
 }
 

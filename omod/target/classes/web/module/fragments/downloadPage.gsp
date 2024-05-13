@@ -2,54 +2,10 @@
   let url = "${ ui.actionLink("nmrsappointment", "users", "fetchPatient") }"
 </script>
  <div id="newAppt" class="">
-     <div class="new-appt-head px-3 py-3">
-        <p>Create Appointment</p>
-        <i class="fa-regular fa-circle-xmark" onClick="closeAppt()" id="closeAppt"></i>
-     </div>
-     <div class="pat-search-and-result">
-         <div class="pat-search-form py-3 px-2">
-            <input type="text" class="pat-search-input" oninput="findAppointmentPatientServer(this.value)" placeholder="Enter patient name or ART Number">
-            <a class="pat-search-btn mx-auto my-auto">Search</a>
-         </div>
-         <div class="pat-search-result px-2 py-3" id="psr"></div>
-     </div>
 
-     <div class="pat-new-appt px-4 py-3 fw-bold hidden">
-        <div class="pat-new-appt-head py-2 mb-5 border-bottom border-success-subtle">
 
-        </div>
-         <form class="form form-inline new-appt-form row">
-            <div class="col-md-6">
-                Appointment Date: <input type="date" id="apptDate" class="form-control">
-            </div>
-            <div class="col-md-6">
-                Appointment Type:
-                    <select  id="apptType" class="form-control form-select">
-                        <option></option>
-                        <option value="drug refill">Drug Refill</option>
-                        <option value="eac">EAC</option>
-                        <option value="viral load">Viral Load</option>
-                    </select>
-            </div>
-            <div class="col-md-12 py-2">
-                <label class="form-label">Notes / Comments </label>
-                <textarea rows="5" id="apptNotes"></textarea>
-            </div>
-            <div class="col-md-6 py-3">
-                 Visit Date: <input type="date" id="visitDate" class="form-control">
-             </div>
-             <div class="col-md-6 py-3">
-                 Provider's Name:
-                     <select  id="providerName" class="form-control form-select">
-                         <option></option>
 
-                     </select>
-             </div>
-            <div class="col-md-12 py-4">
-                <a class="pat-appt-btn mx-auto my-auto" onClick="createAppointment()">Save</a>
-            </div>
-         </form>
-     </div>
+     
  </div>
  <main class="mainDiv">
         <div class="patient-result">
@@ -131,7 +87,7 @@
             <table class="table  table-bordered table-hover">
               <caption class="caption-top captions">
                 <span>Recent Appointments </i></span>
-                <a href="/openmrs/nmrsappointment/nmrsappointmentdownload.page" class="float-end">
+                <a href="#" class="float-end">
                     See all Appointments <i class="fa-solid fa-angle-right"></i>
                 </a>
               </caption>

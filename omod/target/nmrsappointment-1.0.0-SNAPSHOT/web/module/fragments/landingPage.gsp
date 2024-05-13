@@ -2,7 +2,7 @@
   let url = "${ ui.actionLink("nmrsappointment", "users", "fetchPatient") }"
 </script>
  <div id="newAppt" class="">
-     <div class="new-appt-head px-2 py-3">
+     <div class="new-appt-head px-3 py-3">
         <p>Create Appointment</p>
         <i class="fa-regular fa-circle-xmark" onClick="closeAppt()" id="closeAppt"></i>
      </div>
@@ -69,7 +69,7 @@
                             End Date: <input type="date" id="endDate" class="form-control">
                         </div>
                         <div>
-                            <a class="btn btn-success btn-search py-2 px-4">
+                            <a class="btn btn-success btn-search py-2 px-4" onClick="filterPatientAppointment()">
                                 Search <i class="fa-solid fa-search"></i>
                             </a>
                         </div>
@@ -89,8 +89,8 @@
                         <i class="fa-solid fa-user-group icon"></i>
                     </div>
 
-                    <h3>Today's Appointment</h3>
-                    <h3 class="value" id="ta">300</h3>
+                    <h3>Appointments</h3>
+                    <h3 class="value" id="apptValue"></h3>
                 </div>
                 <div>
                     <div class="icon-bg">
@@ -98,10 +98,11 @@
                     </div>
                     <h3>Recapture / Baseline</h3>
                     <div class="pbs-area">
-                        <h3 class="value" id="pbs">200 / 290</h3>
+                        <h3 class="value"><span id="recaptureValue"></span> / <span id="baseValue"></span></h3>
                         <div class="percent bg-success-subtle" id="pbs_percent">
                             <h3>
-                                <i class="fa-solid fa-arrow-up"></i> 70%
+                                <i class="fa-solid fa-arrow-up"></i>
+                                 <span id="pbsPercent"></span>
                             </h3>
                         </div>
 
@@ -115,10 +116,11 @@
                     </div>
                     <h3>Patients without PBS</h3>
                     <div class="pbs-area">
-                        <h3 class="value" id="no_pbs">90</h3>
+                        <h3 class="value" id="noPbs"></h3>
                         <div class="percent percent-red bg-danger-subtle" id="no_pbs_percent">
                             <h3>
-                                <i class="fa-solid fa-arrow-down"></i> 30%
+                                <i class="fa-solid fa-arrow-down"></i>
+                                <span id="noPbsPercent"></span>
                             </h3>
                        </div>
 
