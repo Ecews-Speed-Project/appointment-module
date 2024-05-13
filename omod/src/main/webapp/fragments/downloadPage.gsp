@@ -19,7 +19,7 @@
           <div class="appt-list">
           <table class="table  table-bordered table-hover">
             <caption class="caption-top captions">
-              <span>All Appointments </i></span>
+              <span>Total Appointments </i></span>
               <a class="btn btn-success btn-search py-2 px-4 float-end" id="downloadButton">
                   Download <i class="fa-solid fa-download"></i>
               </a>
